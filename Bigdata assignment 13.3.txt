@@ -1,0 +1,37 @@
+1)What  is HFile?
+A) *Hfiles are File format for hbase. 
+*It is very fast.
+*file of sorted key/value pairs. 
+*Both keys and values are byte arrays.
+
+
+2)What is HRegion Server?
+A)
+*HRegionServer makes a set of HRegions available to clients.  
+There are many HRegionServers in a single HBase deployment.
+*Region servers serve data for reads and writes.
+*Regions are assigned to the Region Servers.
+
+3)What is HBase Meta Table?
+A)
+When a table is in the process of splitting two other columns will be created, info:splitA and info:splitB 
+which represent the two daughter regions. The values for these columns are also serialized HRegionInfo instances.
+ After the region has been split eventually this row will be deleted.
+
+4)What  is zookeeper?
+A)
+HBase uses ZooKeeper as a distributed coordination service to maintain server state in the cluster.
+Zookeeper maintains which servers are alive and available, and provides server failure notification.
+
+5 How read and write operation is performed in HBase.
+A)
+*Read Operation:
+A read request is sent to zookeeper from Hbase by the client.
+The zookeeper,gives the address for the META table.
+The data is written in BlockCache, so that the next time, it can be instantly accessed by the client 
+Finally the read process with required data will be returned to client along with acknowledgment.
+
+*Write Operation:
+When the client issues a Put request, the first step is to write the data to the write-ahead log, the WAL:
+Edits are appended to the end of the WAL file that is stored on disk.
+Once the data is written to the WAL, it is placed in the MemStore. 
